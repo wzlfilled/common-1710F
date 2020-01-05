@@ -172,9 +172,80 @@ public class DataUtil {
 		return inWeek(theDate);
 	}
 	
+	/**
+	 * 判断指定日期是否在本月  
+	 * @param theDate
+	 * @return
+	 */
+	public static boolean inMonth(Date theDate) {
+		Date nowDate = new Date();
+		String nowYyyymm = format(nowDate, "yyyy-MM");
+		String theYyyymm = format(theDate, "yyyy-MM");
+		return nowYyyymm.equals(theYyyymm);
+	}
+	
+	/**
+	 * 判断指定日期是否在本月
+	 * @param theDateStr
+	 * @return
+	 */
+	public static boolean inMonth(String theDateStr) {
+		Date theDate = parse(theDateStr, "yyyy-MM-dd");
+		return inMonth(theDate);
+	}
+	
+	/***
+	 * 获取指定日期月的结束的时间
+	 * @param theDate
+	 * @return
+	 */
+	public static Date getFirstDayOfMonth(Date theDate) {
+		String theDateStr = format(theDate, "yyyy-MM-01");
+		return parse(theDateStr, "yyyy-MM-dd");
+	}
+	
+	/**
+	 * 获取指定日期月的第一天
+	 * @param theDateStr
+	 * @return
+	 */
+	public static Date getFirstDayOfMonth(String theDateStr) {
+		Date theDate = parse(theDateStr, "yyyy-MM-dd");
+		return getFirstDayOfMonth(theDate);
+	}
+	
+	
+	/**
+	 * 获取指定日期月份结束的时间
+	 * @param theDate
+	 * @return
+	 */
+	public static Date getLastDayOfMonth(Date theDate) {
+		/** 取当月的第一天 **/
+		Date firstDayOfMonth = getFirstDayOfMonth(theDate);
+		/** 实例化日历控件 **/
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(firstDayOfMonth);
+		/** 下月1号 **/
+		calendar.add(Calendar.MONTH, 1);
+		/** 减1秒，上月的最后日期 **/
+		calendar.add(Calendar.SECOND, -1);
+		return calendar.getTime();
+	}
+	
+	/**
+	 * 
+	 * @param theDateStr
+	 * @return
+	 */
+	public static Date getLastDayOfMonth(String theDateStr) {
+		Date theDate = parse(theDateStr, "yyyy-MM-dd HH:mm:ss");
+		return getLastDayOfMonth(theDate);
+	}
+	
 	
 	public static void main(String[] args) {
-		System.out.println(inWeek("2020-01-06"));
+		System.out.println(format(getLastDayOfMonth("2020-02-06 12:33:33"), "yyyy-MM-dd HH:mm:ss"));
 	}
 	
 }
